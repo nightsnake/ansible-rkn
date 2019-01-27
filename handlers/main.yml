@@ -1,0 +1,4 @@
+---
+- name: download prefixes
+  command: "{{ rkn_dir }}/makeroutes.sh"
+

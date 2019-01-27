@@ -1,0 +1,21 @@
+- name: Create directory if not exist
+  file:
+    path: "{{ rkn_dir }}/list"
+    state: directory
+
+- name: Copy RKN list downloader
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
+    owner: "{{ item.own | default('root') }}"
+    group: "{{ item.grp | default('root') }}"
+    mode: "{{ item.mode | default('0644') }}"
+  with_items:
+    - "{{ rkn_tpl }}"
+  when: item is defined
+  notify:
+    - download prefixes
+
+- name: force notified handlers to run
+  meta: flush_handlers
+

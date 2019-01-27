@@ -1,0 +1,6 @@
+rkn_dir: /opt/rkn
+rkn_tpl:
+  - src: 'makeroutes.sh.j2'
+    dst: "{{ rkn_dir }}/makeroutes.sh"
+    mode: '0755'
+
