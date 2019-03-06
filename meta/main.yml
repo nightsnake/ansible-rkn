@@ -1,0 +1,12 @@
+---
+
+galaxy_info:
+  author: Aleksey Uchakin a.k.a. Night_Snake
+  description: Role for download script which maintains list of IPs, forbidden by russian RKN
+  company: Nixman.info
+  min_ansible_version: 2.2
+  github_branch:
+  - name: Ubuntu
+    versions:
+    - xenial
+    - bionic
