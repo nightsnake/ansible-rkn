@@ -1,6 +1,7 @@
 rkn_dir: /opt/rkn
+net_minimizer_dir: /opt/net_list_minimizer
+prefix_count: 3000
 rkn_tpl:
   - src: 'makeroutes.sh.j2'
     dst: "{{ rkn_dir }}/makeroutes.sh"
     mode: '0755'
-

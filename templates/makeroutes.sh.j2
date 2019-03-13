@@ -4,12 +4,17 @@ wget -N https://antifilter.download/list/ipsum.lst https://antifilter.download/l
 old=$(cat {{ rkn_dir }}/md5.txt);
 new=$(cat {{ rkn_dir }}/list/*.lst | md5sum | head -c 32);
 
-if [ "$old" != "$new" ]
+logger "RKN: Compare route lists";
+if [ "$old" != "$new" ];
 then
-cat {{ rkn_dir }}/list/ipsum.lst | sed 's_.*_route & reject;_' > /etc/bird/ipsum.txt
-cat {{ rkn_dir }}/list/subnet.lst | sed 's_.*_route & reject;_' > /etc/bird/subnet.txt
+ logger "RKN: Route list has been updated. Make new route list";
+ cat {{ rkn_dir }}/list/subnet.lst | sed 's_.*_route & reject;_' > /etc/bird/subnet.txt
 
-/usr/sbin/birdc configure;
-logger "RKN list reconfigured";
-echo $new > {{ rkn_dir }}/md5.txt;
+ /usr/bin/python3 {{ net_minimizer_dir }}/minimize_net_list.py {{ rkn_dir }}/list/ipsum.lst {{ prefix_count }} | grep -v '###' | sed 's_.*_route & reject;_' > /etc/bird/ipsum.txt
+ date;
+ /usr/sbin/birdc configure;
+ logger "RKN list reconfigured";
+ echo $new > {{ rkn_dir }}/md5.txt;
+else
+  logger "Files haven't been modified";
 fi

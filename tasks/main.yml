@@ -2,6 +2,11 @@
   file:
     path: "{{ rkn_dir }}/list"
     state: directory
+    
+- name: Install Network minimizer
+  git:
+    repo: https://github.com/phoenix-mstu/net_list_minimizer
+  dest: "{{ net_minimizer_dir }}"
 
 - name: Copy RKN list downloader
   template:
@@ -18,4 +23,3 @@
 
 - name: force notified handlers to run
   meta: flush_handlers
-
